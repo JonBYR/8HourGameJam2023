@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,10 +15,22 @@ public class PlayerController : MonoBehaviour
     int lives = 3;
     public float knockbackForce = 0.5f;
     public bool godMode = false;
+    public VolumeProfile vol;
+    UnityEngine.Rendering.Universal.FilmGrain grain;
+    UnityEngine.Rendering.Universal.ColorAdjustments col;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        if (vol.TryGet<FilmGrain>(out grain))
+        {
+            grain.intensity.Override(1f);
+        }
+        if (vol.TryGet<ColorAdjustments>(out col))
+        {
+            col.contrast.Override(-24f);
+            col.postExposure.Override(0f);
+        }
     }
 
     // Update is called once per frame
@@ -24,6 +38,10 @@ public class PlayerController : MonoBehaviour
     {
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
+        if(godMode)
+        {
+            GodPowers();
+        }
     }
     void FixedUpdate()
     {
@@ -56,6 +74,19 @@ public class PlayerController : MonoBehaviour
             EnemyController forceStopper = col.gameObject.GetComponent<EnemyController>();
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
             forceStopper.Invoke("StopForces", 2f);
+        }
+    }
+    void GodPowers()
+    {
+        lives = 10000000;
+        if(vol.TryGet<FilmGrain>(out grain))
+        {
+            grain.intensity.Override(0f);
+        }
+        if (vol.TryGet<ColorAdjustments>(out col))
+        {
+            col.contrast.Override(15f);
+            col.postExposure.Override(3f);
         }
     }
 }

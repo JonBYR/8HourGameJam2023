@@ -8,12 +8,14 @@ public class PassWordGenerator : MonoBehaviour
     private string codeWord;
     //public TMP_InputField guessInput;
     public TMP_Text guessText;
+    private PlayerController cont;
     // Start is called before the first frame update
     void Awake()
     {
         List<string> potentialWords = new List<string>() { "code", "pass", "left", "yuzu", "pear", "heat", "beat", "dead", "send", "aims", "game", "tame", "seal" };
         int position = Random.Range(0, potentialWords.Count-1);
         codeWord = potentialWords[position];
+        cont = GameObject.Find("Player").GetComponent<PlayerController>();
         Debug.Log(codeWord);
     }
 
@@ -21,10 +23,11 @@ public class PassWordGenerator : MonoBehaviour
     
     public void checkGuess(TMP_InputField guess)
     {
-        Debug.Log(guess);
+        
         if (guess.text == codeWord)
         {
             guessText.text = "Code Word guessed! GOD MODE UNLOCKED";
+            cont.godMode = true;
         }
         else   
         {
