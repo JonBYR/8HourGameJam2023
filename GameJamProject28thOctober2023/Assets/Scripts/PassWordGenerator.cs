@@ -9,6 +9,8 @@ public class PassWordGenerator : MonoBehaviour
     //public TMP_InputField guessInput;
     public TMP_Text guessText;
     private PlayerController cont;
+    public AudioSource cursedAudio;
+    public AudioSource whimsicalAudio;
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,6 +30,8 @@ public class PassWordGenerator : MonoBehaviour
         {
             guessText.text = "Code Word guessed! GOD MODE UNLOCKED";
             cont.godMode = true;
+            cursedAudio.Pause();
+            whimsicalAudio.Play();
         }
         else   
         {

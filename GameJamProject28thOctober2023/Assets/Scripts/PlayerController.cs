@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D playerRb;
+    public Camera cam;
     private bool facingRight = true;
     private bool facingUp;
     public float playerSpeed = 2f;
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public VolumeProfile vol;
     UnityEngine.Rendering.Universal.FilmGrain grain;
     UnityEngine.Rendering.Universal.ColorAdjustments col;
+    Vector2 mousePos;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         if(godMode)
         {
             GodPowers();
@@ -45,30 +49,17 @@ public class PlayerController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        playerRb.MovePosition(playerRb.position + movement.normalized * playerSpeed * Time.fixedDeltaTime);
-
-        if(movement.y > 0 && movement.x == 0)
-        {
-            transform.rotation = Quaternion.FromToRotation(playerRb.position, Vector3.down);
-        }
-        else if (movement.y < 0 && movement.x == 0)
-        {
-            transform.rotation = Quaternion.FromToRotation(playerRb.position, Vector3.up);
-        }
-        else if (movement.y == 0 && movement.x > 0)
-        {
-            transform.rotation = Quaternion.FromToRotation(playerRb.position, Vector3.left);
-        }
-        else if (movement.y == 0 && movement.x < 0)
-        {
-            transform.rotation = Quaternion.FromToRotation(playerRb.position, Vector3.right);
-        }
+        playerRb.MovePosition(playerRb.position + movement * playerSpeed * Time.fixedDeltaTime);
+        Vector2 lookDir = mousePos - playerRb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+        playerRb.rotation = angle;
     }
     void OnCollisionEnter2D(Collision2D col)
     {
         if(lives >= 0 && col.gameObject.tag == "Enemy")
         {
             lives--;
+            if (lives == 0) SceneManager.LoadScene("DeathScene");
             Vector2 direction = (col.gameObject.transform.position - transform.position).normalized;
             Vector2 knockback = direction * knockbackForce;
             EnemyController forceStopper = col.gameObject.GetComponent<EnemyController>();

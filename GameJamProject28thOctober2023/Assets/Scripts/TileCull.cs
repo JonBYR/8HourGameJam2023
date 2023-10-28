@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class TileCull : MonoBehaviour
+{
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Destroy(col.gameObject);
+            Destroy(this.gameObject);
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0) SceneManager.LoadScene("WinScene"); 
+        }
+        else if(col.gameObject.tag == "Wall")
+        {
+            Destroy(this.gameObject);
+        }
+        
+    }
+}
