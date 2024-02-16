@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         if (vol.TryGet<FilmGrain>(out grain))
         {
-            grain.intensity.Override(1f);
+            grain.intensity.Override(1f); //gets post prossing effect and manipulates in script
         }
         if (vol.TryGet<ColorAdjustments>(out col))
         {
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition); //gets mouse position
         if(godMode)
         {
             GodPowers();
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         playerRb.MovePosition(playerRb.position + movement * playerSpeed * Time.fixedDeltaTime);
         Vector2 lookDir = mousePos - playerRb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        playerRb.rotation = angle;
+        playerRb.rotation = angle; //ensures player faces the correct direction
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -63,13 +63,13 @@ public class PlayerController : MonoBehaviour
             Vector2 direction = (col.gameObject.transform.position - transform.position).normalized;
             Vector2 knockback = direction * knockbackForce;
             EnemyController forceStopper = col.gameObject.GetComponent<EnemyController>();
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse); //if enemies hit the player they have an impulsive force directed onto them
             forceStopper.Invoke("StopForces", 2f);
         }
     }
     void GodPowers()
     {
-        lives = 10000000;
+        lives = 10000000; //ensures that player is never likely to run out of lives
         if(vol.TryGet<FilmGrain>(out grain))
         {
             grain.intensity.Override(0f);

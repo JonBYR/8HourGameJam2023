@@ -31,21 +31,21 @@ public class TilePicker : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("Input");
-            if (play.godMode == false) held = false;
+            if (play.godMode == false) held = false; //cannot hold a tile while not in god mode
             else
             {
-                if(held == false)
+                if(held == false) //if not holding a tile
                 {
-                    newTile = Instantiate(tile, playerPosition.position, playerPosition.rotation);
-                    newTile.transform.parent = GameObject.Find("Player").GetComponent<Transform>();
+                    newTile = Instantiate(tile, playerPosition.position, playerPosition.rotation); //instantiate a tile prefab at the player position
+                    newTile.transform.parent = GameObject.Find("Player").GetComponent<Transform>(); //tile is parent of player
                     Vector3Int pos = new Vector3Int(Mathf.FloorToInt(playerPosition.position.x), Mathf.FloorToInt(playerPosition.position.y), Mathf.FloorToInt(playerPosition.position.z));
-                    tilemap.SetTile(pos, voidTile);
+                    tilemap.SetTile(pos, voidTile); //tile at the current player position is now replaced by a void tile
                     held = true;
                 }
                 else if(held == true)
                 {
                     Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
-                    newRb.AddForce(playerPosition.up * speed, ForceMode2D.Impulse);
+                    newRb.AddForce(playerPosition.up * speed, ForceMode2D.Impulse); //add force to tile so it works as a bullet
                     held = false;
                 }
             }

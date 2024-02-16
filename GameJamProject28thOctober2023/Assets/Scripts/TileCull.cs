@@ -10,7 +10,7 @@ public class TileCull : MonoBehaviour
         {
             Destroy(col.gameObject);
             Destroy(this.gameObject);
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0) SceneManager.LoadScene("WinScene"); 
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0) SceneManager.LoadScene("WinScene"); //if no enemies are left player wins
         }
         else if(col.gameObject.tag == "Wall")
         {

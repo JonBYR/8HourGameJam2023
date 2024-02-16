@@ -14,7 +14,7 @@ public class PassWordGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        List<string> potentialWords = new List<string>() { "code", "pass", "left", "yuzu", "pear", "heat", "beat", "dead", "send", "aims", "game", "tame", "seal" };
+        List<string> potentialWords = new List<string>() { "code", "pass", "left", "yuzu", "pear", "heat", "beat", "dead", "send", "aims", "game", "tame", "seal" }; //potential words
         int position = Random.Range(0, potentialWords.Count-1);
         codeWord = potentialWords[position];
         cont = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -26,17 +26,17 @@ public class PassWordGenerator : MonoBehaviour
     public void checkGuess(TMP_InputField guess)
     {
         
-        if (guess.text == codeWord)
+        if (guess.text == codeWord) //checks if user guessed the password
         {
             guessText.text = "Code Word guessed! GOD MODE UNLOCKED";
-            cont.godMode = true;
+            cont.godMode = true; //activates God Mode in player
             cursedAudio.Pause();
             whimsicalAudio.Play();
         }
         else   
         {
-            List<int> correctPositions = new List<int>();
-            List<char> correctLetters = new List<char>();
+            List<int> correctPositions = new List<int>(); //checks if any letters are in the correct position
+            List<char> correctLetters = new List<char>(); //checks if any letters are correct
             for (int i = 0; i < guess.text.Length; i++)
             {
                 char c = guess.text[i];
