@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         playerRb.MovePosition(playerRb.position + movement * playerSpeed * Time.fixedDeltaTime);
         Vector2 lookDir = mousePos - playerRb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        playerRb.rotation = angle; //ensures player faces the correct direction
+        playerRb.rotation = angle; //ensures player faces the correct direction based on mouse position
     }
     void OnCollisionEnter2D(Collision2D col)
     {
