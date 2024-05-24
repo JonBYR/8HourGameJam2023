@@ -6,7 +6,7 @@ public class TileCull : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Enemy")
+        if(col.gameObject.tag == "Enemy" && !TilePicker.held)
         {
             Destroy(col.gameObject);
             Destroy(this.gameObject);

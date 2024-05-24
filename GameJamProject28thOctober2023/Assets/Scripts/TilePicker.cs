@@ -12,7 +12,7 @@ public class TilePicker : MonoBehaviour
     float horizontal;
     float vertical;
     float speed = 10f;
-    bool held = false;
+    public static bool held = false;
     private Tilemap tilemap;
     public Tile voidTile;
     // Start is called before the first frame update
@@ -37,18 +37,58 @@ public class TilePicker : MonoBehaviour
                 if(held == false) //if not holding a tile
                 {
                     newTile = Instantiate(tile, playerPosition.position, playerPosition.rotation); //instantiate a tile prefab at the player position
-                    newTile.transform.parent = GameObject.Find("TileSpawn").GetComponent<Transform>(); //tile is child of player
+                    newTile.transform.parent = GameObject.Find("TileHolder").GetComponent<Transform>(); //tile is child of player
                     Vector3Int pos = new Vector3Int(Mathf.FloorToInt(playerPosition.position.x), Mathf.FloorToInt(playerPosition.position.y), Mathf.FloorToInt(playerPosition.position.z));
                     tilemap.SetTile(pos, voidTile); //tile at the current player position is now replaced by a void tile
-                    held = true;
-                }
-                else if(held == true)
-                {
                     Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
-                    newRb.AddForce(playerPosition.up * speed, ForceMode2D.Impulse); //add force to tile so it works as a bullet
-                    held = false;
+                    newRb.isKinematic = true;
+                    held = true;
                 }
             }
         }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            if (held == false) return;
+            else
+            {
+                Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
+                newRb.isKinematic = false;
+                newRb.AddForce(playerPosition.up * speed, ForceMode2D.Impulse);
+                held = false;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (held == false) return;
+            else
+            {
+                Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
+                newRb.isKinematic = false;
+                newRb.AddForce(playerPosition.right * speed, ForceMode2D.Impulse);
+                held = false;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (held == false) return;
+            else
+            {
+                Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
+                newRb.isKinematic = false;
+                newRb.AddForce(-playerPosition.up * speed, ForceMode2D.Impulse);
+                held = false;
+            }
+        }
+        //else if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    if (held == false) return;
+        //    else
+        //    {
+        //        Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
+        //        newRb.isKinematic = false;
+        //        newRb.AddForce(-playerPosition.right * speed, ForceMode2D.Impulse);
+        //        held = false;
+        //    }
+        //}
     }
 }
