@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        godMode = true;
         playerRb = GetComponent<Rigidbody2D>();
         if (vol.TryGet<FilmGrain>(out grain))
         {

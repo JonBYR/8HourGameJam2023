@@ -37,7 +37,7 @@ public class TilePicker : MonoBehaviour
                 if(held == false) //if not holding a tile
                 {
                     newTile = Instantiate(tile, playerPosition.position, playerPosition.rotation); //instantiate a tile prefab at the player position
-                    newTile.transform.parent = GameObject.Find("Player").GetComponent<Transform>(); //tile is parent of player
+                    newTile.transform.parent = GameObject.Find("TileSpawn").GetComponent<Transform>(); //tile is child of player
                     Vector3Int pos = new Vector3Int(Mathf.FloorToInt(playerPosition.position.x), Mathf.FloorToInt(playerPosition.position.y), Mathf.FloorToInt(playerPosition.position.z));
                     tilemap.SetTile(pos, voidTile); //tile at the current player position is now replaced by a void tile
                     held = true;
