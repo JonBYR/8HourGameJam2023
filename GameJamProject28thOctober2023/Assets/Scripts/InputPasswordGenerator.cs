@@ -33,7 +33,7 @@ public class InputPasswordGenerator : MonoBehaviour
         List<int> correctPositions = new List<int>();
         for(int i = 0; i < buttons.Count; i++)
         {
-            if (buttons.Contains(playerCombo[i])) correctButtons.Add(playerCombo[i]);
+            if (buttons.Contains(playerCombo[i]) && playerCombo[i] != buttons[i]) correctButtons.Add(playerCombo[i]); //button is correct but not in the correct position
             if (playerCombo[i] == buttons[i])
             {
                 correctPositions.Add(i + 1);
@@ -58,7 +58,7 @@ public class InputPasswordGenerator : MonoBehaviour
             {
                 int[] correctPos = correctPositions.ToArray();
                 string[] correctCodes = correctButtons.ToArray();
-                guessText.text = "Correct Positions: " + string.Join(", ", correctPos) + " Correct Buttons in wrong position: " + string.Join(", ", correctCodes);
+                guessText.text = "Correct Positions: " + string.Join(", ", correctPos) + " \nCorrect Buttons in wrong position: " + string.Join(", ", correctCodes);
                 return false;
             }
         }

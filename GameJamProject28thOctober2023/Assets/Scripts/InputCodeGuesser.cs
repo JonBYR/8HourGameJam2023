@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
+using ResearchArcade;
 public class InputCodeGuesser : MonoBehaviour
 {
     List<string> inputCodes = new List<string>();
@@ -18,36 +18,34 @@ public class InputCodeGuesser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (inputCodes.Count == 4)
+        {
+            if (gen.passCodeGuesser(inputCodes) == true) this.gameObject.SetActive(false);
+            else inputCodes.Clear();
+        }
+        if (ArcadeInput.Player1.A.Down)
         {
             inputCodes.Add("A");
         }
-        else if (Input.GetKeyDown(KeyCode.B))
+        else if (ArcadeInput.Player1.B.Down)
         {
             inputCodes.Add("B");
         }
-        else if (Input.GetKeyDown(KeyCode.C))
+        else if (ArcadeInput.Player1.C.Down)
         {
             inputCodes.Add("C");
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (ArcadeInput.Player1.D.Down)
         {
             inputCodes.Add("D");
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (ArcadeInput.Player1.E.Down)
         {
             inputCodes.Add("E");
         }
-        else if (Input.GetKeyDown(KeyCode.F))
+        else if (ArcadeInput.Player1.F.Down)
         {
             inputCodes.Add("F");
-        }
-        if (inputCodes.Count == 4)
-        {
-            if(gen.passCodeGuesser(inputCodes) == true) this.gameObject.SetActive(false);
-            else inputCodes.Clear();
-        }
-        
-            
+        }  
     }
 }

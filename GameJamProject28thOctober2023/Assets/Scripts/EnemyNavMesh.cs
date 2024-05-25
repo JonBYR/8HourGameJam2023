@@ -31,6 +31,7 @@ public class EnemyNavMesh : MonoBehaviour
     }
     public void StopForces()
     {
+        Debug.Log("Force Invoked");
         enemyrb.velocity = Vector2.zero;
         enemyrb.angularVelocity = 0; //Invoked in player to stop enemy pushback
     }
