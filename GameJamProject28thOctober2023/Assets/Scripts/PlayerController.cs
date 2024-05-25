@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
     Vector2 mousePos;
     Quaternion originalRotation;
     float rotation;
-    string currentDirection;
+    public AudioSource zombieSounds;
+    public static string currentDirection;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,21 +53,25 @@ public class PlayerController : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 0, 180);
             playerRb.MovePosition(playerRb.position - (new Vector2(0.1f, 0) * playerSpeed * Time.fixedDeltaTime));
+            currentDirection = "left";
         }
         if (ArcadeInput.Player1.JoyRight.HeldDown)
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
             playerRb.MovePosition(playerRb.position + (new Vector2(0.1f, 0) * playerSpeed * Time.fixedDeltaTime));
+            currentDirection = "right";
         }
         if (ArcadeInput.Player1.JoyUp.HeldDown)
         {
             transform.eulerAngles = new Vector3(0, 0, 90);
             playerRb.MovePosition(playerRb.position + (new Vector2(0, 0.1f) * playerSpeed * Time.fixedDeltaTime));
+            currentDirection="up";
         }
         if (ArcadeInput.Player1.JoyDown.HeldDown)
         {
             transform.eulerAngles = new Vector3(0, 0, -90);
             playerRb.MovePosition(playerRb.position - (new Vector2(0, 0.1f) * playerSpeed * Time.fixedDeltaTime));
+            currentDirection = "down";
         }
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition); //gets mouse position
         if(godMode)
@@ -85,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         if(lives >= 0 && col.gameObject.tag == "Enemy")
         {
+            if(!godMode) zombieSounds.Play();
             lives--;
             if (lives == 0) SceneManager.LoadScene("OpeningScene");
             Vector2 direction = (col.gameObject.transform.position - transform.position).normalized;

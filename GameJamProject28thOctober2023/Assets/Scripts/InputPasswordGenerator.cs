@@ -25,6 +25,10 @@ public class InputPasswordGenerator : MonoBehaviour
             else if(buttons.Contains(button)) existing.Add(button); //if button exists once in code then add to a seperate list that will check if the button is present twice
             buttons.Add(button);
         }
+        //buttons.Add("A");
+        //buttons.Add("A");
+        //buttons.Add("A");
+        //buttons.Add("A"); //for testing
     }
 
     public bool passCodeGuesser(List<string> playerCombo)

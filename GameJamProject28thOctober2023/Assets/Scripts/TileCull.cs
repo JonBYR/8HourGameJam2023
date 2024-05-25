@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class TileCull : MonoBehaviour
 {
+    private void Update()
+    {
+
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "Enemy" && !TilePicker.held)

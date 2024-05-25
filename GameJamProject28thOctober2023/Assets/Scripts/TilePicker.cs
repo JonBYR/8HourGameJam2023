@@ -10,6 +10,7 @@ public class TilePicker : MonoBehaviour
 {
     private SpriteRenderer tileSprite;
     public GameObject tile;
+    public Tile ground;
     GameObject newTile;
     public GameObject collisionTile;
     public Transform playerPosition;
@@ -21,6 +22,10 @@ public class TilePicker : MonoBehaviour
     private Tilemap tilemap;
     public NavMeshSurface Surface2D;
     List<GameObject> collidables;
+    public AudioSource yank;
+    public AudioClip yanky;
+    public AudioClip throwy;
+    string originalString;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +49,8 @@ public class TilePicker : MonoBehaviour
             {
                 if(held == false) //if not holding a tile
                 {
+                    yank.clip = yanky; //set audioclip to be the yank clip 
+                    yank.Play();
                     Collider2D[] allCollisions = Physics2D.OverlapCircleAll(playerPosition.position, 0.1f);
                     if(allCollisions.Length != 0)
                     {
@@ -70,12 +77,33 @@ public class TilePicker : MonoBehaviour
             if (held == false) return;
             else
             {
+                originalString = PlayerController.currentDirection;
+                yank.clip = throwy;
+                yank.Play();
                 newTile.GetComponent<TileCull>().enabled = true;
                 held = false;
                 Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
                 newRb.isKinematic = false;
                 newRb.AddForce(playerPosition.right * speed, ForceMode2D.Impulse);
                 newTile.GetComponent<TileCull>().RemoveTile();
+            }
+        }
+        if (ArcadeInput.Player1.F.HeldDown && play.godMode)
+        {
+            Debug.Log("Input Called");
+            removeAllColliders();
+            for (int i = tilemap.cellBounds.min.x; i < tilemap.cellBounds.max.x; i++)
+            {
+                for (int j = tilemap.cellBounds.min.y; j < tilemap.cellBounds.max.y; j++)
+                {
+                    for (int k = tilemap.cellBounds.min.z; k < tilemap.cellBounds.max.z; k++)
+                    {
+                        if (tilemap.GetTile(new Vector3Int(i, j, k)) == null)
+                        {
+                           tilemap.SetTile(new Vector3Int(i, j, k), ground);
+                        }
+                    }
+                }
             }
         }
     }

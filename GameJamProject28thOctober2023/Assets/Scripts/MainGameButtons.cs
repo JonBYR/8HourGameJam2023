@@ -25,27 +25,5 @@ public class MainGameButtons : MonoBehaviour
             Debug.Log("Quit Application");
             ResearchArcade.Navigation.ExitGame();
         }
-        if (!godMoment) return;
-        else
-        {
-            if(ArcadeInput.Player1.F.Down)
-            {
-                Debug.Log("Input Called");
-                tilePicker.removeAllColliders();
-                for(int i = groundTiles.cellBounds.min.x; i < groundTiles.cellBounds.max.x; i++)
-                {
-                    for(int j = groundTiles.cellBounds.min.y; j < groundTiles.cellBounds.max.y; j++)
-                    {
-                        for(int k = groundTiles.cellBounds.min.z; k < groundTiles.cellBounds.max.z; k++)
-                        {
-                            if(groundTiles.GetTile(new Vector3Int(i, j, k)) == null)
-                            {
-                                groundTiles.SetTile(new Vector3Int(i, j, k), ground);
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }
