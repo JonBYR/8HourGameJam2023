@@ -25,7 +25,7 @@ public class MainMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ArcadeInput.Player1.JoyRight.HeldDown || ArcadeInput.Player1.JoyLeft.HeldDown)
+        if(ArcadeInput.Player1.JoyRight.Down || ArcadeInput.Player1.JoyLeft.Down)
         {
             MenuNavigator();
         }
