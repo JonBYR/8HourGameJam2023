@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public float rotationSpeed = 3f;
     Rigidbody2D enemyrb;
     // Start is called before the first frame update
-    void Start()
+    void Start() //legacy script
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
         enemyrb = GetComponent<Rigidbody2D>();

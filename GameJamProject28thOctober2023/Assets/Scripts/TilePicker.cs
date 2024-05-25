@@ -1,5 +1,7 @@
+using NavMeshPlus.Components;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 public class TilePicker : MonoBehaviour
@@ -17,9 +19,11 @@ public class TilePicker : MonoBehaviour
     private Tilemap tilemap;
     private Tilemap voidMap;
     public Tile voidTile;
+    public NavMeshSurface Surface2D;
     // Start is called before the first frame update
     void Start()
     {
+        Surface2D.BuildNavMesh();
         tileSprite = tile.GetComponent<SpriteRenderer>();
         play = GameObject.Find("Player").GetComponent<PlayerController>();
         tilemap = GameObject.Find("Floors").GetComponent<Tilemap>();
@@ -52,6 +56,8 @@ public class TilePicker : MonoBehaviour
                     Vector3Int pos = new Vector3Int(Mathf.FloorToInt(playerPosition.position.x), Mathf.FloorToInt(playerPosition.position.y), Mathf.FloorToInt(playerPosition.position.z));
                     tilemap.SetTile(tilemap.WorldToCell(pos), null); //tile at the current player position is now replaced by a void tile
                     //voidMap.SetColliderType(voidMap.WorldToCell(pos), Tile.ColliderType.Sprite);
+                    //TileBase voidTile = voidMap.GetTile(pos);
+                    //voidTile.GetComponent<Collider2D>().enabled = true;     //needs to be investigated more              
                     Instantiate(collisionTile, pos, Quaternion.identity);
                     Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
                     newRb.isKinematic = true;
@@ -66,42 +72,14 @@ public class TilePicker : MonoBehaviour
             {
                 Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
                 newRb.isKinematic = false;
-                newRb.AddForce(playerPosition.up * speed, ForceMode2D.Impulse);
-                held = false;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (held == false) return;
-            else
-            {
-                Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
-                newRb.isKinematic = false;
                 newRb.AddForce(playerPosition.right * speed, ForceMode2D.Impulse);
                 held = false;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (held == false) return;
-            else
-            {
-                Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
-                newRb.isKinematic = false;
-                newRb.AddForce(-playerPosition.up * speed, ForceMode2D.Impulse);
-                held = false;
-            }
-        }
-        //else if (Input.GetKeyDown(KeyCode.Y))
-        //{
-        //    if (held == false) return;
-        //    else
-        //    {
-        //        Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
-        //        newRb.isKinematic = false;
-        //        newRb.AddForce(-playerPosition.right * speed, ForceMode2D.Impulse);
-        //        held = false;
-        //    }
-        //}
+    }
+    private void LateUpdate()
+    {
+        Physics2D.SyncTransforms(); //this method should force the update of the navmesh at runtime
+        Surface2D.UpdateNavMesh(Surface2D.navMeshData);
     }
 }
