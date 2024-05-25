@@ -7,6 +7,7 @@ public class TilePicker : MonoBehaviour
     private SpriteRenderer tileSprite;
     public GameObject tile;
     GameObject newTile;
+    public GameObject collisionTile;
     public Transform playerPosition;
     private PlayerController play;
     float horizontal;
@@ -14,6 +15,7 @@ public class TilePicker : MonoBehaviour
     float speed = 10f;
     public static bool held = false;
     private Tilemap tilemap;
+    private Tilemap voidMap;
     public Tile voidTile;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,7 @@ public class TilePicker : MonoBehaviour
         tileSprite = tile.GetComponent<SpriteRenderer>();
         play = GameObject.Find("Player").GetComponent<PlayerController>();
         tilemap = GameObject.Find("Floors").GetComponent<Tilemap>();
+        voidMap = GameObject.Find("Void").GetComponent<Tilemap>();
     }
 
     // Update is called once per frame
@@ -36,10 +39,20 @@ public class TilePicker : MonoBehaviour
             {
                 if(held == false) //if not holding a tile
                 {
+                    Collider2D[] allCollisions = Physics2D.OverlapCircleAll(playerPosition.position, 0.1f);
+                    if(allCollisions.Length != 0)
+                    {
+                        foreach(var col in allCollisions)
+                        {
+                            if (col.gameObject.name.Contains("CollisionTile")) return;
+                        }
+                    }
                     newTile = Instantiate(tile, playerPosition.position, playerPosition.rotation); //instantiate a tile prefab at the player position
                     newTile.transform.parent = GameObject.Find("TileHolder").GetComponent<Transform>(); //tile is child of player
                     Vector3Int pos = new Vector3Int(Mathf.FloorToInt(playerPosition.position.x), Mathf.FloorToInt(playerPosition.position.y), Mathf.FloorToInt(playerPosition.position.z));
-                    tilemap.SetTile(pos, voidTile); //tile at the current player position is now replaced by a void tile
+                    tilemap.SetTile(tilemap.WorldToCell(pos), null); //tile at the current player position is now replaced by a void tile
+                    //voidMap.SetColliderType(voidMap.WorldToCell(pos), Tile.ColliderType.Sprite);
+                    Instantiate(collisionTile, pos, Quaternion.identity);
                     Rigidbody2D newRb = newTile.GetComponent<Rigidbody2D>();
                     newRb.isKinematic = true;
                     held = true;

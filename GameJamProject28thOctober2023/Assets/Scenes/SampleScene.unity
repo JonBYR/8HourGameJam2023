@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 688965490}
   - component: {fileID: 688965489}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: Void
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14176,6 +14176,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 3657901796924635721, guid: 06ec0f5348afa844f957fc5399d86a2d, type: 3}
+      propertyPath: voidTile
+      value: 
+      objectReference: {fileID: 11400000, guid: ada18d192516d9f4a88f9202bdb0288f, type: 2}
+    - target: {fileID: 3657901796924635721, guid: 06ec0f5348afa844f957fc5399d86a2d, type: 3}
+      propertyPath: collisionTile
+      value: 
+      objectReference: {fileID: 5960749662900976131, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
     - target: {fileID: 7951448337357884941, guid: 06ec0f5348afa844f957fc5399d86a2d, type: 3}
       propertyPath: m_Name
       value: Player
@@ -14262,6 +14270,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eef7948c84f40a489d1792e1b4eee7d, type: 3}
+--- !u!1001 &7998169220167399150
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283407097276306569, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960749662900976131, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_Name
+      value: CollisionTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960749662900976131, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 637bf5bf290a25f449b0bacb105d3983, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -14285,3 +14354,4 @@ SceneRoots:
   - {fileID: 561499059}
   - {fileID: 804877990}
   - {fileID: 989173006}
+  - {fileID: 7998169220167399150}
