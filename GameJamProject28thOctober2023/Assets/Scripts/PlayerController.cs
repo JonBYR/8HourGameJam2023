@@ -26,9 +26,14 @@ public class PlayerController : MonoBehaviour
     float rotation;
     public AudioSource zombieSounds;
     public static string currentDirection;
+    private string lastDirection;
+    public static bool changedInput;
     // Start is called before the first frame update
     void Start()
     {
+        changedInput = false;
+        lastDirection = "null";
+        currentDirection = "null";
         originalRotation = transform.rotation;
         //godMode = true; //to test
         playerRb = GetComponent<Rigidbody2D>();
@@ -73,7 +78,7 @@ public class PlayerController : MonoBehaviour
             currentDirection = "down";
         }
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition); //gets mouse position
-        if(godMode)
+        if (godMode)
         {
             GodPowers();
         }
@@ -81,9 +86,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         playerRb.MovePosition(playerRb.position + movement * playerSpeed * Time.fixedDeltaTime);
-        //Vector2 lookDir = mousePos - playerRb.position;
-        //float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        //playerRb.rotation = angle; //ensures player faces the correct direction based on mouse position
     }
     void OnCollisionEnter2D(Collision2D col)
     {

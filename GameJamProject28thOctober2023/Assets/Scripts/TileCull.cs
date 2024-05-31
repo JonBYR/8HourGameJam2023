@@ -6,7 +6,7 @@ public class TileCull : MonoBehaviour
 {
     private void Update()
     {
-
+        //if (PlayerController.changedInput == true) Destroy(this.gameObject);
     }
     void OnTriggerEnter2D(Collider2D col)
     {
