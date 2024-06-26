@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 # That pesky mac one!!
 .DS_Store
+
+dist/
